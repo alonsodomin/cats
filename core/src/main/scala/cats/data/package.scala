@@ -66,4 +66,9 @@ package object data {
 
   type RWS[E, L, S, A] = ReaderWriterState[E, L, S, A]
   val RWS = ReaderWriterState
+
+  type Store[S, A] = StoreT[Eval, S, A]
+  object Store {
+    def apply[S, A](f: S => A, pos: S): Store[S, A] = StoreT(Eval.later(f), pos)
+  }
 }
